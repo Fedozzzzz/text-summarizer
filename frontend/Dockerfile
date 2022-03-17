@@ -1,11 +1,11 @@
 # pull official base image
-FROM node:16.3.0-alpine
+FROM node:16.14-alpine
 
 # set working directory
-WORKDIR /app
+WORKDIR /app/frontend
 
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
+# add `/app/frontend/node_modules/.bin` to $PATH
+ENV PATH /app/frontend/node_modules/.bin:$PATH
 
 # install app dependencies
 COPY package.json ./
