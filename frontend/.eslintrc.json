@@ -1,0 +1,29 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "airbnb"
+    ],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+        "semi": [2, "always"],
+        "indent": ["error", 4],
+        "object-curly-spacing": ["error", "always"],
+        "max-len": ["error", { "code": 100 }],
+        "no-multi-spaces": "error",
+        "quotes": [2, "single", { "avoidEscape": true }],
+        "no-trailing-spaces": [2, { "skipBlankLines": true }]
+    }
+}
