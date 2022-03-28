@@ -1,8 +1,12 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 module.exports = {
+    entry: {
+        app: './src/index.js',
+    },
     module: {
         rules: [
             {
@@ -39,6 +43,7 @@ module.exports = {
             },
         ],
     },
+    devtool: 'source-map',
     devServer: {
         contentBase: path.join(__dirname, 'dist'),
         compress: true,
@@ -48,6 +53,7 @@ module.exports = {
         hot: true,
     },
     plugins: [
+        new ReactRefreshWebpackPlugin(),
         new ESLintPlugin(),
         new HtmlWebPackPlugin({
             template: './public/index.html',

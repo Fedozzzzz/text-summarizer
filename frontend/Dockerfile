@@ -2,19 +2,23 @@
 FROM node:16.14-alpine
 
 # set working directory
-WORKDIR /app/frontend
+WORKDIR /app
 
 # add `/app/frontend/node_modules/.bin` to $PATH
-ENV PATH /app/frontend/node_modules/.bin:$PATH
+#ENV PATH /app/node_modules/.bin:$PATH
 
 # install app dependencies
-COPY package.json ./
-COPY package-lock.json ./
+COPY package.json /app
+COPY package-lock.json /app
 
 # add app
-COPY . ./
+COPY . /app
+
+RUN npm i --silent
+
+
+RUN npm run build
 
 # start app
 CMD ["npm", "run", "start"]
 
-EXPOSE 3000

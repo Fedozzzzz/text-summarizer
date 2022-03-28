@@ -47,6 +47,8 @@ services:
     build:
       context: ../frontend
       dockerfile: Dockerfile
+#    environment:
+#      CHOKIDAR_USEPOLLING: "true"
     restart: always
     links:
       - backend
@@ -55,7 +57,12 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - /data/frontend/storage:/data/frontend
+      - ../frontend/src:/app/src
+
+      #    volumes:
+#      - ./frontend:/app/frontend
+#      - /app/node_modules
+#      - ./frontend:/app
 
 networks:
   default:
