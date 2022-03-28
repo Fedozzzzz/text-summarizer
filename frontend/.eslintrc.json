@@ -5,7 +5,8 @@
     },
     "extends": [
         "plugin:react/recommended",
-        "airbnb"
+        "airbnb",
+        "plugin:react-hooks/recommended"
     ],
     "parserOptions": {
         "ecmaFeatures": {
@@ -15,15 +16,16 @@
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react",
+        "react-hooks"
     ],
     "rules": {
-        "semi": [2, "always"],
+        "react/jsx-indent" : ["error", 4],
+        "react/jsx-indent-props" : ["error", 4],
         "indent": ["error", 4],
-        "object-curly-spacing": ["error", "always"],
-        "max-len": ["error", { "code": 100 }],
-        "no-multi-spaces": "error",
-        "quotes": [2, "single", { "avoidEscape": true }],
-        "no-trailing-spaces": [2, { "skipBlankLines": true }]
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn"
     }
 }

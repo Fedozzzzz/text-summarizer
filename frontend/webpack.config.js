@@ -8,6 +8,9 @@ module.exports = {
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
+                resolve: {
+                    extensions: ['.js', '.jsx'],
+                },
                 use: {
                     loader: 'babel-loader',
                 },
@@ -41,6 +44,8 @@ module.exports = {
         compress: true,
         port: 3000,
         host: '0.0.0.0',
+        watchContentBase: true,
+        hot: true,
     },
     plugins: [
         new ESLintPlugin(),
