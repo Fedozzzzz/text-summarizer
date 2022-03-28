@@ -1,14 +1,14 @@
 version: '3'
 
 services:
-#  oracle_db:
-#    image: oracleinanutshell/oracle-xe-11g:latest
-#    restart: always
-#    ports:
-#      - 1521:1521
-#      - 5500:5500
-#    volumes:
-#      - /data/db:/data/db
+  #  oracle_db:
+  #    image: oracleinanutshell/oracle-xe-11g:latest
+  #    restart: always
+  #    ports:
+  #      - 1521:1521
+  #      - 5500:5500
+  #    volumes:
+  #      - /data/db:/data/db
 
   backend:
     build:
@@ -16,15 +16,32 @@ services:
       dockerfile: Dockerfile
     restart: always
 #    links:
-#      - oracle_db
+#      - summarizer
 #    depends_on:
-#      - oracle_db
+#      - summarizer
     ports:
       - 5000:5000
     volumes:
       - /data/backend/storage:/data/backend
-#    environment:
-#      - ORACLE_CONNECT_STRING='0.0.0.0:1521'
+  #    environment:
+  #      - ORACLE_CONNECT_STRING='0.0.0.0:1521'
+
+  summarizer:
+    build:
+      context: ../summarizer
+      dockerfile: Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
+    restart: always
+    links:
+      - backend
+    depends_on:
+      - backend
+    ports:
+      - 8000:8000
+    volumes:
+        - /data/summarizer/storage:/data/summarizer
+    #    environment:
+    #      - ORACLE_CONNECT_STRING='0.0.0.0:1521'
 
   frontend:
     build:
