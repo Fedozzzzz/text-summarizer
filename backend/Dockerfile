@@ -1,14 +1,15 @@
 FROM node:16.14-alpine
 
-WORKDIR /app/backend
+WORKDIR /app
 
-ENV PATH /app/backend/node_modules/.bin:$PATH
+ENV PATH /app/node_modules/.bin:$PATH
 
+RUN npm install -g nodemon
 COPY package*.json ./
 
-RUN npm install
+RUN npm ci --silent
 
-COPY . .
+COPY . ./
 
-EXPOSE 5000
-CMD [ "node", "server.js" ]
+#EXPOSE 5000
+CMD npm run dev

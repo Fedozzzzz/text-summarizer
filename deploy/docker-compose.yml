@@ -15,14 +15,15 @@ services:
       context: ../backend
       dockerfile: Dockerfile
     restart: always
-#    links:
-#      - summarizer
-#    depends_on:
-#      - summarizer
     ports:
       - 5000:5000
     volumes:
-      - /data/backend/storage:/data/backend
+      - ../backend:/app
+#      - /data/backend/storage:/data/backend
+    links:
+      - summarizer
+    depends_on:
+      - summarizer
   #    environment:
   #      - ORACLE_CONNECT_STRING='0.0.0.0:1521'
 
@@ -32,23 +33,15 @@ services:
       dockerfile: Dockerfile
     command: python manage.py runserver 0.0.0.0:8000
     restart: always
-    links:
-      - backend
-    depends_on:
-      - backend
     ports:
       - 8000:8000
     volumes:
-        - /data/summarizer/storage:/data/summarizer
-    #    environment:
-    #      - ORACLE_CONNECT_STRING='0.0.0.0:1521'
+      - /data/summarizer/storage:/data/summarizer
 
   frontend:
     build:
       context: ../frontend
       dockerfile: Dockerfile
-#    environment:
-#      CHOKIDAR_USEPOLLING: "true"
     restart: always
     links:
       - backend
