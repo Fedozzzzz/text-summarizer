@@ -1,11 +1,14 @@
 import BACKEND_PATH from '../config';
 
 // eslint-disable-next-line import/prefer-default-export
-export function getSummarizedText(text) {
+export async function getSummarizedText(text) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(text),
     };
-    return fetch(`${BACKEND_PATH}/api/books/max_days`, requestOptions).then((res) => res.json());
+    console.log(requestOptions);
+    const res = await fetch(`${BACKEND_PATH}/api/users/summarize`, requestOptions);
+    // const res = await fetch('http://localhost:8000/summarize', requestOptions);
+    return res.json();
 }
