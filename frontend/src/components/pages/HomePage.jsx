@@ -5,7 +5,8 @@ import { getSummarizedText } from '../../ajax/users';
 import './Home.css';
 
 function HomePage() {
-    const [formValue, setFormValue] = useState('Default Value');
+    const [formValue, setFormValue] = useState('');
+    const [summary, setSummary] = useState('');
 
     const handleChangeFormValue = (event) => {
         setFormValue(event.target.value);
@@ -15,7 +16,7 @@ function HomePage() {
         try {
             const { summarizedText } = await getSummarizedText({ text: formValue });
             console.log('summarizedText', summarizedText);
-            if (summarizedText) setFormValue(summarizedText);
+            if (summarizedText) setSummary(summarizedText);
         } catch (e) {
             console.log(e);
         }
@@ -23,12 +24,14 @@ function HomePage() {
 
     return (
         <div className="home">
-            <Form
-                value={formValue}
-                handleChange={handleChangeFormValue}
-                // handleSubmit={handleSubmitForm}
-            />
-            <Button onClick={handleSubmitForm}>Submit</Button>
+            <div className="formContainer">
+                <Form
+                    value={formValue}
+                    handleChange={handleChangeFormValue}
+                />
+                <Button onClick={handleSubmitForm}>Submit</Button>
+            </div>
+            { summary && <t>{summary}</t> }
         </div>
     );
 }

@@ -4,19 +4,19 @@ import TextField from '@mui/material/TextField';
 import './Form.css';
 
 export default function Form(props) {
-    const { value, handleChange, handleSubmit } = props;
+    const { value, handleChange } = props;
 
     return (
         <div className="textFormContainer">
             <TextField
                 id="filled-multiline-flexible"
                 label="Multiline"
+                fullWidth
                 multiline
                 rows={10}
                 value={value}
                 onChange={handleChange}
                 variant="filled"
-                // onSubmit={handleSubmit}
             />
         </div>
     );
@@ -25,11 +25,9 @@ export default function Form(props) {
 Form.propTypes = {
     value: PropTypes.string,
     handleChange: PropTypes.func,
-    handleSubmit: PropTypes.func,
 };
 
 Form.defaultProps = {
     value: 'Enter Value',
     handleChange: null,
-    handleSubmit: null,
 };

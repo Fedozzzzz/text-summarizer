@@ -1,4 +1,6 @@
 .home {
+}
+.formContainer {
     display: flex;
     justify-content: center;
 }
