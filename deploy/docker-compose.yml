@@ -19,9 +19,8 @@ services:
       - 5000:5000
     volumes:
       - ../backend:/app
-#      - /data/backend/storage:/data/backend
-    links:
-      - summarizer
+#    links:
+#      - summarizer
     depends_on:
       - summarizer
   #    environment:
@@ -31,20 +30,19 @@ services:
     build:
       context: ../summarizer
       dockerfile: Dockerfile
-    command: python manage.py runserver 0.0.0.0:8000
     restart: always
     ports:
       - 8000:8000
     volumes:
-      - /data/summarizer/storage:/data/summarizer
+      - ../summarizer:/app
 
   frontend:
     build:
       context: ../frontend
       dockerfile: Dockerfile
     restart: always
-    links:
-      - backend
+#    links:
+#      - backend
     depends_on:
       - backend
     ports:
@@ -57,7 +55,7 @@ services:
 #      - /app/node_modules
 #      - ./frontend:/app
 
-networks:
-  default:
-    external:
-      name: local_network_1
+#networks:
+#  default:
+#    external:
+#      name: local_network_1
