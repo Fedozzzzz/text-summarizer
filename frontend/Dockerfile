@@ -14,11 +14,11 @@ COPY package-lock.json /app
 # add app
 COPY . /app
 
-RUN npm i --silent
+RUN npm ci --silent
 
 
 RUN npm run build
 
 # start app
-CMD ["npm", "run", "start"]
+CMD npm run start
 
