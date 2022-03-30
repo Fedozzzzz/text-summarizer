@@ -21,5 +21,5 @@ from . import views
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('summarize/', views.summarize),
+    path('summarize/', views.summarize_text),
 ]
