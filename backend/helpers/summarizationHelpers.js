@@ -1,14 +1,12 @@
 const axios = require('axios');
-const logger = require('../utils/logger');
 
 async function summarizeTextRequest(text) {
     try {
-        return await axios.post('http://0.0.0.0:8000/summarize', {
-            text,
-        });
-    } catch (err) {
-        logger.error('An error occurred in method "summarizeTextRequest"');
-        return null;
+        const requestData = JSON.stringify({ text });
+        return await axios.post('http://summarizer:8000/summarize/', requestData);
+    } catch (e) {
+        const { error } = e.response.data;
+        throw new Error(`Error in method "summarizeTextRequest": ${e} - ${error}`);
     }
 }
 
