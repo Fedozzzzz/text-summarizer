@@ -1,17 +1,48 @@
 const express = require('express');
-const summarizeTextRequest = require('../helpers/summarizationHelpers');
 const logger = require('../utils/logger');
+const { getMysqlConnection, releaseMysqlConnection } = require('../mysql/index');
 
 const router = express.Router();
 
-router.post('/summarize', async (req, res) => {
+router.post('/registration', async (req, res) => {
+    const connection = await getMysqlConnection();
     try {
-        const { text } = req.body;
-        const requestResult = await summarizeTextRequest(text);
-        res.status(HTTPStatus.OK).send(requestResult.data);
+        const { email, password } = req.body;
+
+        const queryResult = await connection.execute(`select *
+                                                  from users where email=:email `, [email], { outFormat: oracledb.OBJECT });
+
+        const user = queryResult.rows[0];
+        if (!user || !isValidPassword(user, password)) {
+            return res.status(HTTPStatus.UNAUTHORIZED).send({ error: 'incorrect email or password' });
+        }
+        res.status(HTTPStatus.OK).send({ ok: true });
     } catch (e) {
-        logger.error(e);
+        console.error('error', e);
         res.status(HTTPStatus.CONFLICT).send({ error: 'Error while login' });
+    } finally {
+        await releaseMysqlConnection(connection);
+    }
+});
+
+router.post('/login', async (req, res) => {
+    const connection = await getConnectionFromOracle();
+    try {
+        const { email, password } = req.body;
+
+        const queryResult = await connection.execute(`select *
+                                                  from users where email=:email `, [email], { outFormat: oracledb.OBJECT });
+
+        const user = queryResult.rows[0];
+        if (!user || !isValidPassword(user, password)) {
+            return res.status(HTTPStatus.UNAUTHORIZED).send({ error: 'incorrect email or password' });
+        }
+        res.status(HTTPStatus.OK).send({ ok: true });
+    } catch (e) {
+        console.error('error', e);
+        res.status(HTTPStatus.CONFLICT).send({ error: 'Error while login' });
+    } finally {
+        await doReleaseConnection(connection);
     }
 });
 

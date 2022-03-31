@@ -1,14 +1,18 @@
 version: '3'
 
 services:
-  #  oracle_db:
-  #    image: oracleinanutshell/oracle-xe-11g:latest
-  #    restart: always
-  #    ports:
-  #      - 1521:1521
-  #      - 5500:5500
-  #    volumes:
-  #      - /data/db:/data/db
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'fedor'
+      MYSQL_PASSWORD: '1234'
+      MYSQL_ROOT_PASSWORD: "1234"
+    ports:
+      - "3306:3306"
+    volumes:
+      - /data/db:/data/db
 
   backend:
     build:
@@ -16,15 +20,14 @@ services:
       dockerfile: Dockerfile
     restart: always
     ports:
-      - 5000:5000
+      - "5000:5000"
     volumes:
       - ../backend:/app
-#    links:
-#      - summarizer
     depends_on:
       - summarizer
-  #    environment:
-  #      - ORACLE_CONNECT_STRING='0.0.0.0:1521'
+      - mysql
+#    environment:
+#      - ORACLE_CONNECT_STRING='0.0.0.0:1521'
 
   summarizer:
     build:
@@ -32,7 +35,7 @@ services:
       dockerfile: Dockerfile
     restart: always
     ports:
-      - 8000:8000
+      - "8000:8000"
     volumes:
       - ../summarizer:/app
 
@@ -41,21 +44,10 @@ services:
       context: ../frontend
       dockerfile: Dockerfile
     restart: always
-#    links:
-#      - backend
     depends_on:
       - backend
     ports:
-      - 3000:3000
+      - "3000:3000"
     volumes:
       - ../frontend/src:/app/src
 
-      #    volumes:
-#      - ./frontend:/app/frontend
-#      - /app/node_modules
-#      - ./frontend:/app
-
-#networks:
-#  default:
-#    external:
-#      name: local_network_1

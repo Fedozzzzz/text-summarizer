@@ -7,6 +7,7 @@ const { readConfig } = require('../config/index');
 const { applyRouter } = require('../routes');
 const logger = require('../utils/logger');
 const morganMiddleware = require('../utils/morganMiddleware');
+const { checkMysqlConnection } = require('../mysql');
 
 async function setupGlobals() {
     global.config = await readConfig();
@@ -28,6 +29,11 @@ async function runServer() {
 
     applyMiddlewares(app);
     applyRouter(app);
+    try {
+        await checkMysqlConnection();
+    } catch (e) {
+        logger.error(e);
+    }
 
     return app;
 }
