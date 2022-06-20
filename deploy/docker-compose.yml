@@ -14,6 +14,24 @@ services:
     volumes:
       - /data/db:/data/db
 
+  migration:
+    build:
+      context: ../migration
+    command:
+      [
+        "./wait-for-it/wait-for-it.sh",
+        "mysql:3306",
+        "--",
+        "npm",
+        "run",
+        "db-migrate",
+        "up"
+      ]
+    links:
+      - mysql
+    depends_on:
+      - mysql
+
   backend:
     build:
       context: ../backend
@@ -26,8 +44,6 @@ services:
     depends_on:
       - summarizer
       - mysql
-#    environment:
-#      - ORACLE_CONNECT_STRING='0.0.0.0:1521'
 
   summarizer:
     build:

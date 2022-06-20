@@ -1,8 +1,8 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import HomePage from './components/pages/HomePage';
-import '../public/favicon.ico';
-import './App.css';
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import HomePage from "./components/pages/HomePage";
+import "../public/favicon.ico";
+import "./App.css";
 
 function App() {
     return (

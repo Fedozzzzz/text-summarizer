@@ -1,6 +1,11 @@
 .home {
 }
 .formContainer {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
+}
+
+.summary {
+  display: flex;
+  padding: 65px;
 }
