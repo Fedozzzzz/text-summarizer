@@ -28,7 +28,7 @@ router.post('/registration', async (req, res) => {
         }
         const salt = generateSalt();
         const encryptedPassword = encryptPassword(password, salt);
-        const sqlQuery = 'insert into users(email, password, salt) values ?';
+        const sqlQuery = 'insert into users(email, password, salt) values (?,?,?)';
         await connection.query(sqlQuery, [email, encryptedPassword, salt]);
         res.status(HTTPStatus.OK).send({ ok: true });
     } catch (err) {

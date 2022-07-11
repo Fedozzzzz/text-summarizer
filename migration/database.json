@@ -2,8 +2,10 @@
   "dev": {
     "host": "localhost",
     "user": "fedor",
+    "port": "3306",
     "password": "1234",
     "database": "db",
-    "driver": "mysql"
+    "driver": "mysql",
+    "multipleStatements": true
   }
 }
