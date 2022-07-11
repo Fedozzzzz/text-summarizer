@@ -5,7 +5,16 @@
   justify-content: center;
 }
 
+.titleContainer {
+  display: flex;
+  /*justify-content: center;*/
+  align-items: center;
+  flex-direction: column;
+}
 .summary {
   display: flex;
   padding: 65px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }

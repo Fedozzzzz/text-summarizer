@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import Form from '../../forms/Form/Form';
 import { getSummarizedText } from '../../../ajax/nlp';
 import './HomePage.css';
@@ -17,23 +17,37 @@ function HomePage() {
         try {
             const res = await getSummarizedText({ text: formValue });
             if (res.ok) {
-                const { summarizedText } = res.json();
+                const { summarizedText } = await res.json();
                 if (summarizedText) setSummary(summarizedText);
             }
         } catch (e) {
             console.log(e);
         }
     };
-    // console.log('hello world');
 
     return (
         <div className="home">
             <Navbar />
+            <div className="titleContainer">
+                <Typography variant="h3" gutterBottom component="div">
+                    Text summarizer
+                </Typography>
+                <Typography variant="h5" gutterBottom component="div">
+                    Enter the text to get the abstract
+                </Typography>
+            </div>
             <div className="formContainer">
                 <Form value={formValue} handleChange={handleChangeFormValue} multiline label="Enter text" />
                 <Button onClick={handleSubmitForm}>Submit</Button>
             </div>
-            {summary && <div className="summary">{summary}</div>}
+            {summary && (
+                <div className="summary">
+                    <Typography variant="h5" gutterBottom component="div">
+                        Summary:
+                    </Typography>
+                    <p>{summary}</p>
+                </div>
+            )}
         </div>
     );
 }
