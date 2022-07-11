@@ -13,9 +13,12 @@ export const useAuth = () => useContext(authContext);
 function useProvideAuth() {
     const [isAuthed, setIsAuthed] = useState(false);
 
-    useEffect(async () => {
-        const res = await checkLoggedIn();
-        setIsAuthed(res.ok);
+    useEffect(() => {
+        const checkAuth = async () => {
+            const res = await checkLoggedIn();
+            setIsAuthed(res.ok);
+        };
+        checkAuth();
     }, []);
 
     return {
