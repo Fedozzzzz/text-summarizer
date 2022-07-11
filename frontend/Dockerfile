@@ -17,7 +17,7 @@ COPY . /app
 RUN npm i --silent
 
 
-RUN npm run build
+#RUN npm run build
 
 # start app
 CMD npm run start

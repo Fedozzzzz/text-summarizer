@@ -1,17 +1,62 @@
-import BACKEND_PATH from "../config";
+import BACKEND_PATH from '../config';
 
-
-export async function getSummarizedText(text) {
-    const requestOptions = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(text),
+export async function register(email, password) {
+    const req = {
+        email,
+        password,
     };
-    console.log(requestOptions);
-    const res = await fetch(
-        `${BACKEND_PATH}/api/nlp/summarize`,
-        requestOptions
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(req),
+    };
+    return fetch(
+        `${BACKEND_PATH}/api/users/registration`,
+        requestOptions,
     );
-    // const res = await fetch('http://localhost:8000/summarize', requestOptions);
-    return res.json();
 }
+
+export async function login(email, password) {
+    const req = {
+        email,
+        password,
+    };
+    const requestOptions = {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(req),
+    };
+    return fetch(
+        `${BACKEND_PATH}/api/users/login`,
+        requestOptions,
+    );
+}
+
+export async function logout() {
+    const requestOptions = {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+    };
+    return fetch(
+        `${BACKEND_PATH}/api/users/logout`,
+        requestOptions,
+    );
+}
+
+export async function checkLoggedIn() {
+    const requestOptions = {
+        method: 'GET',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+    };
+    return fetch(
+        `${BACKEND_PATH}/api/users/checkLoggedIn`,
+        requestOptions,
+    );
+}
+
+// creds:
+//         email: 'fedozzz',
+//         password: '1234',
