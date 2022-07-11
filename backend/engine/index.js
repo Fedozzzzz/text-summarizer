@@ -1,13 +1,15 @@
 const express = require('express');
 const HTTPStatus = require('http-status-codes');
-// const _ = require('lodash');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const { readConfig } = require('../config/index');
 const { applyRouter } = require('../routes');
 const logger = require('../utils/logger');
 const morganMiddleware = require('../utils/morganMiddleware');
 const { checkMysqlConnection } = require('../mysql');
+// const _ = require('lodash');
+// const { errorLogger, errorResponder } = require('../utils/errorsHandlers');
 
 async function setupGlobals() {
     global.config = await readConfig();
@@ -15,10 +17,13 @@ async function setupGlobals() {
 }
 
 function applyMiddlewares(app) {
+    app.use(cors({ origin: config.http.allowedOrigin, credentials: true }));
+    app.use(cookieParser());
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
-    app.use(cors({ origin: config.http.allowedOrigin, credentials: true }));
     app.use(morganMiddleware);
+    // app.use(errorLogger);
+    // app.use(errorResponder);
 }
 
 async function runServer() {

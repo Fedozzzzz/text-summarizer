@@ -1,7 +1,3 @@
-// const clientsRouter = require('./clients/index');
-// const bookTypesRouter = require('./bookTypes/index');
-// const booksRouter = require('./books/index');
-// const journalRouter = require('./journal/index');
 const usersRouter = require('./users');
 const nlpRouter = require('./nlp');
 

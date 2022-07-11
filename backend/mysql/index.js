@@ -1,4 +1,4 @@
-const mysql = require('mysql');
+const mysql = require('mysql2/promise');
 const logger = require('../utils/logger');
 
 async function getMysqlConnection() {
@@ -14,6 +14,7 @@ async function getMysqlConnection() {
 async function releaseMysqlConnection(connection) {
     try {
         connection.end();
+        logger.info('Connection to MySQL server has been closed');
     } catch (e) {
         logger.error(e);
     }
